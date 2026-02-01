@@ -4,12 +4,12 @@ It is completely customizable with prepared emulation modes for Emacs, \
 CUA (similar to Openoffice), Borland-IDE, Brief, and EDT using the S-Lang \
 scripting language (with a syntax resembling C)."
 HOMEPAGE="http://www.jedsoft.org/jed/"
-COPYRIGHT="1992, 1998, 2000, 2005, 2006-2019 John E. Davis"
+COPYRIGHT="1992, 1998, 2000, 2005, 2006-2025 John E. Davis"
 LICENSE="GNU GPL v2"
-REVISION="3"
-srcGitRev="1f279c4b22854c7d02466227b3070b01ef48c053"
+REVISION="1"
+srcGitRev="7d3ea0680251de5b1784a0438edd8e87d6cbf80e"
 SOURCE_URI="https://github.com/jedsoft/jed/archive/$srcGitRev.tar.gz"
-CHECKSUM_SHA256="0b4e1fe9627869551b906bd08bec58bc0789e98d524c24199deac742ba0f49eb"
+CHECKSUM_SHA256="ba48b81bcd5a351adeb4c89e48bd27d63a63e8e8ed82c9828e64032c9d6efef6"
 SOURCE_DIR="jed-$srcGitRev"
 PATCHES="jed-$portVersion.patchset"
 
@@ -53,7 +53,7 @@ PATCH()
 {
 	# adapted from Arch Linux
 	sed \
-		-e "s|..DEST.*doc|${docDir}|g" \
+		-e "s|..DEST.*doc|${documentationDir}/packages/jed|g" \
 		-i src/Makefile.in
 }
 
@@ -63,8 +63,9 @@ BUILD()
 
 	LDFLAGS="-lbsd -lnetwork" \
 	JED_ROOT=$dataDir/jed \
-	runConfigure --omit-dirs binDir ./configure \
+	runConfigure --omit-dirs "binDir docDir" ./configure \
 		--bindir="$commandBinDir" \
+		--docdir="$documentaionDir/packages/jed" \
 		--with-slanglib=$libDir \
 		--with-slanginc=$developDir
 
@@ -75,5 +76,5 @@ INSTALL()
 {
 	make install
 	rm -f $manDir/man1/rgrep.1
-	cp -af INSTALL* $docDir
+	cp -af INSTALL* $documentationDir/packages/jed
 }
