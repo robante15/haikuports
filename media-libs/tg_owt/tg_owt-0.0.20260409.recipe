@@ -3,7 +3,7 @@ DESCRIPTION="Telegram Desktop's fork of Google's WebRTC."
 HOMEPAGE="https://github.com/desktop-app/tg_owt"
 COPYRIGHT="2013-2026 Telegram"
 LICENSE="BSD (3-clause)"
-REVISION="1"
+REVISION="2"
 srcGitRev="89df288dd6ba5b2ec95b3c5eaf1e7e0c3a870fc4"
 SOURCE_URI="https://github.com/desktop-app/tg_owt/archive/$srcGitRev.tar.gz"
 SOURCE_DIR="tg_owt-$srcGitRev"
@@ -37,16 +37,16 @@ PROVIDES="
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
-	lib:libavcodec$secondaryArchSuffix
-	lib:libavformat$secondaryArchSuffix
-	lib:libavutil$secondaryArchSuffix
+	lib:libavcodec$secondaryArchSuffix >= 62
+	lib:libavformat$secondaryArchSuffix >= 62
+	lib:libavutil$secondaryArchSuffix >= 60
 	lib:libcrypto$secondaryArchSuffix
 	lib:libjpeg$secondaryArchSuffix
 	lib:libopenh264$secondaryArchSuffix
 	lib:libopus$secondaryArchSuffix
 	lib:libprotobuf$secondaryArchSuffix
-	lib:libswresample$secondaryArchSuffix
-	lib:libswscale$secondaryArchSuffix
+	lib:libswresample$secondaryArchSuffix >= 6
+	lib:libswscale$secondaryArchSuffix >= 9
 	lib:libvpx$secondaryArchSuffix
 	lib:libz$secondaryArchSuffix
 	"
@@ -68,7 +68,7 @@ if [ $targetArchitecture == x86_gcc2 ]; then
 	"
 else
 	BUILD_REQUIRES+="
-		ffmpeg6${secondaryArchSuffix}_devel
+		ffmpeg8${secondaryArchSuffix}_devel
 	"
 fi
 
