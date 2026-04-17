@@ -1,4 +1,4 @@
-From 5d17dd53bdebba3a5810f1358686b3dd4c620ae8 Mon Sep 17 00:00:00 2001
+From 1c17bb697f60f8e926a17922e15e5a40f062beea Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <me@trungnt2910.com>
 Date: Mon, 29 Jul 2024 22:55:42 +1000
 Subject: gdb/remote: fix assertion failure during startup
@@ -136,7 +136,7 @@ index 1d8d9b1..823677c 100644
 2.51.0
 
 
-From bc5bcee3a9f742ad13c572945678b683c8b6ead6 Mon Sep 17 00:00:00 2001
+From 30dd4b4d92875f1bda40f0f20409d59cf88171dd Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <57174311+trungnt2910@users.noreply.github.com>
 Date: Tue, 28 May 2024 22:31:22 +1000
 Subject: gdbserver: Initial Haiku support
@@ -5227,7 +5227,7 @@ index 22eaf54..1f36dc4 100644
 2.51.0
 
 
-From 51c5570193439f45cf0a0d4131270e2de8f70177 Mon Sep 17 00:00:00 2001
+From e9fbef7b0a7d726e6f8aaf6685781aa6173841f7 Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <me@trungnt2910.com>
 Date: Mon, 1 Jul 2024 10:32:51 +0700
 Subject: gdb: Initial Haiku support
@@ -7154,7 +7154,7 @@ index 2e98e32..4e6eccc 100644
 2.51.0
 
 
-From 48c43062323ba6d4ed1d9448620a6f0a538adbf4 Mon Sep 17 00:00:00 2001
+From 26cab6f5b142020f9de71af58ae3d7b5acb34315 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Sat, 7 Mar 2026 21:55:17 +0100
 Subject: gdb: Update Haiku support for 16.x
@@ -7309,7 +7309,7 @@ index 5f6a90f..bd023f5 100644
 2.51.0
 
 
-From 70beabd9e0466d7d272412fb1b4a3ac940e4be22 Mon Sep 17 00:00:00 2001
+From e779feb2ea8459e128eaf872df55da12bac75ab0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Sat, 7 Mar 2026 21:56:27 +0100
 Subject: gdbserver: Update Haiku support for 16.x
@@ -7484,7 +7484,7 @@ index 41295d5..b0551b8 100644
 2.51.0
 
 
-From 9069c145be8711b6321472314deb60ffc3597daa Mon Sep 17 00:00:00 2001
+From ba1e555af862261b00a963f7022ddba5e39cc9df Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Wed, 11 Mar 2026 17:00:20 +0100
 Subject: gdb: Update Haiku support for 17.x
@@ -7579,7 +7579,7 @@ index fd8011f..38ddefb 100644
    gdbarch_register_osabi_sniffer (bfd_arch_i386, bfd_target_elf_flavour,
                                    i386_haiku_osabi_sniffer);
 diff --git a/gdb/solib-haiku.c b/gdb/solib-haiku.c
-index 0ec56b5..588bbc0 100644
+index 0ec56b5..2c62ead 100644
 --- a/gdb/solib-haiku.c
 +++ b/gdb/solib-haiku.c
 @@ -23,9 +23,34 @@
@@ -7632,17 +7632,13 @@ index 0ec56b5..588bbc0 100644
    {
      CORE_ADDR commpage_address = haiku_get_commpage_address ();
      sec->addr = commpage_address;
-@@ -49,72 +74,55 @@ haiku_relocate_section_addresses (solib &so, struct target_section *sec)
-     so.addr_low = commpage_address;
-     so.addr_high = commpage_address + HAIKU_COMMPAGE_SIZE;
+@@ -51,70 +76,53 @@ haiku_relocate_section_addresses (solib &so, struct target_section *sec)
    }
--  else
-+  /*else
+   else
    {
 -    solib_target_so_ops.relocate_section_addresses (so, sec);
--  }
-+    solib_target_so_ops::relocate_section_addresses (so, sec);
-+  }*/
++    target_solib_ops::relocate_section_addresses (so, sec);
+   }
  }
  
 -static void
@@ -7749,7 +7745,7 @@ index bd023f5..092b2c5 100644
 2.51.0
 
 
-From 599a7118c7af4f2ada42d610a5c782b4d86a97f1 Mon Sep 17 00:00:00 2001
+From 5c1f65f2c0e9cef3d868a2a42138f54b48efe2b6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Wed, 11 Mar 2026 17:03:47 +0100
 Subject: gdbserver: Update Haiku support for 17.x
