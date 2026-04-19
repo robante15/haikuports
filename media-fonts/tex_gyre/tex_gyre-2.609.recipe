@@ -20,29 +20,25 @@ Times New Roman, designed by Stanley Morison together with Starling Burgess \
 and Victor Lardent and first offered by Monotype).
 The constituent standard faces of each family have been greatly extended \
 (though Chorus omits Greek support and has no small-caps family)."
-HOMEPAGE="http://www.gust.org.pl/projects/e-foundry/tex-gyre"
-COPYRIGHT="2007-2018 for TeX Gyre extensions by B. Jackowski, J.M. Nowacki et \
+HOMEPAGE="https://www.gust.org.pl/projects/e-foundry/tex-gyre"
+COPYRIGHT="2006-2018 for TeX Gyre extensions by B. Jackowski, J.M. Nowacki et \
 al. (on behalf of TeX Users Groups). Vietnamese characters were added by Han \
 The Thanh."
 LICENSE="GUST-FONT-LICENSE"
 REVISION="1"
-SOURCE_URI="http://www.gust.org.pl/projects/e-foundry/tex-gyre/whole/tg${portVersion//./_}otf.zip"
-CHECKSUM_SHA256="d7f8be5317bec4e644cf16c5abf876abeeb83c43dbec0ccb4eee4516b73b1bbe"
-SOURCE_DIR="tg${portVersion//./_}otf"
+SOURCE_URI="https://www.gust.org.pl/projects/e-foundry/tex-gyre/whole/tex_gyre-otf-${portVersion//./_}-31_03_2026.zip"
+CHECKSUM_SHA256="1731555aea263ad82e7f555fb6483ec98342593d63822f658f7a9f8023d85a33"
+SOURCE_DIR=""
 
 ARCHITECTURES="any"
 DISABLE_SOURCE_PACKAGE="yes"
 
-PROVIDES="tex_gyre = $portVersion"
-REQUIRES=""
-
-BUILD_REQUIRES=""
-BUILD_PREREQUIRES="coreutils"
-
-BUILD()
-{
-	true
-}
+PROVIDES="
+	tex_gyre = $portVersion
+	"
+REQUIRES="
+	haiku
+	"
 
 INSTALL()
 {
