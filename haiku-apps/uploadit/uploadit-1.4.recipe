@@ -1,12 +1,18 @@
 SUMMARY="A Tracker add-on to upload a file or folder to an online service"
-DESCRIPTION="UploadIt is a Tracker Add-On that uploads a single file or folder \
-to an online service, currently https://temp.sh. A folder gets automatically \
-zipped up before it's uploaded.
+DESCRIPTION="UploadIt is a Tracker addon that uploads a single file or folder \
+to an online service. A folder gets automatically zipped up before it's uploaded.
 
 The URL for the uploaded file is put into the clipboard after the upload has \
 finished, ready to be pasted into an email, a chat window or forum post.
 
-Uploaded files are retained for 3 days. The maximum file size is 4 GiB.
+UploadIt provides a number of file hosters in the its preferences, found in \
+Deskbar's \"Preferences\" menu, or by invoking the add-on without any files \
+selected.
+There you can also add the URL to a file hoster not built into UploadIt. Not \
+any file hoster though, it has to support uploading via the 'curl' command. \
+UploadIt uses this fixed 'curl' command line:
+
+curl -F 'file=@'\"File-to-upload\" https://File-hoster-url
 
 Tip: Install Clipdinger from HaikuDepot. It includes a 'Clipboard Monitor' \
 that you can embed as Replicant on the Desktop. When you see the upload URL \
@@ -17,7 +23,7 @@ COPYRIGHT="2018-2026 Humdinger"
 LICENSE="MIT"
 REVISION="1"
 SOURCE_URI="$HOMEPAGE/archive/v$portVersion.tar.gz"
-CHECKSUM_SHA256="4597d8cae750c47dae80ddbac13e36c5a687db687b84ec56e474c3317c41903a"
+CHECKSUM_SHA256="a0387f4822b7324fa2d5caa442c756e698e031c6730ea928ee53a0da9995482d"
 SOURCE_DIR="uploadit"
 
 ARCHITECTURES="all"
@@ -25,6 +31,7 @@ ARCHITECTURES="all"
 PROVIDES="
 	uploadit = $portVersion
 	addon:UploadIt = $portVersion
+	preferences:UploadIt = $portVersion
 	"
 REQUIRES="
 	haiku
@@ -49,4 +56,5 @@ BUILD()
 INSTALL()
 {
 	make install INSTALL_DIR=$addOnsDir/Tracker
+	make install INSTALL_DIR=$preferencesDir	
 }
