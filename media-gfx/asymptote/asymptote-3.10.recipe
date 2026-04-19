@@ -28,7 +28,7 @@ LICENSE="GNU GPL v3
 	GNU LGPL v3"
 REVISION="1"
 SOURCE_URI="https://downloads.sourceforge.net/project/asymptote/$portVersion/asymptote-$portVersion.src.tgz"
-CHECKSUM_SHA256="ba733a99fcaaf0c09a8e8f30b46fe4b2be04ea640d2bf034de01886bd1717ae7"
+CHECKSUM_SHA256="d27be8fef250d5dc338602bf723e1d09e8cd1e85c199ab4c80743089fd8cd2c7"
 PATCHES="asymptote-$portVersion.patchset"
 ADDITIONAL_FILES="xasy.rdef.in"
 

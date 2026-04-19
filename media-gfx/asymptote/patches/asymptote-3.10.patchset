@@ -1,4 +1,4 @@
-From 1c4626e12c898849c7dd0196f1c972c9257c8c20 Mon Sep 17 00:00:00 2001
+From 4c88d4adde0421392873d24070e6b71628165546 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
 Date: Fri, 18 Apr 2025 20:59:28 +0200
 Subject: Haiku build fixes
@@ -14,10 +14,10 @@ Disable the usage of unsupported GLUT functions.
 Change a hard-coded -fPIE to -fPIC.
 
 diff --git a/LspCpp/CMakeLists.txt b/LspCpp/CMakeLists.txt
-index 6b12b04..8e7ebe6 100644
+index 8876135..0da6b76 100644
 --- a/LspCpp/CMakeLists.txt
 +++ b/LspCpp/CMakeLists.txt
-@@ -162,7 +162,7 @@ function(lspcpp_set_target_options target)
+@@ -176,7 +176,7 @@ function(lspcpp_set_target_options target)
          set_property(TARGET ${target} PROPERTY CXX_STANDARD 14)
      endif()
  
@@ -27,10 +27,10 @@ index 6b12b04..8e7ebe6 100644
      if (CMAKE_GENERATOR MATCHES "Visual Studio.*")
          lspcpp_set_target_options_with_nuget_pkg(${target} boost 1.76.0.0)
 diff --git a/Makefile.in b/Makefile.in
-index 346ce10..b6b88ca 100644
+index 38f14f7..ede2542 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -170,7 +170,7 @@ asymptote.so: $(COREFILES:=.pic.o) glew.o
+@@ -169,7 +169,7 @@ asymptote.so: $(COREFILES:=.pic.o) glew.o
  
  $(LSP_ROOT)/liblspcpp.a:
  	$(CMAKE) -B$(LSP_ROOT) -S$(LSP_ROOT) -DCMAKE_CXX_FLAGS=\
@@ -39,7 +39,7 @@ index 346ce10..b6b88ca 100644
  	@LSP_CMAKE_OPTIONS@
  	$(MAKE) -C $(LSP_ROOT)
  
-@@ -209,7 +209,7 @@ GEN_PREPROCESSED_DEPFILE_BASE_ARGS = \
+@@ -208,7 +208,7 @@ GEN_PREPROCESSED_DEPFILE_BASE_ARGS = \
      $(PYTHON) gen_preprocessed_depfile.py \
  	--cxx-compiler="$(CXX)" \
  	--additional-raw-arguments="$(OPTS)" \
@@ -49,7 +49,7 @@ index 346ce10..b6b88ca 100644
  $(SYMBOL_FILES:=.raw.i): %.raw.i: %.cc gen_preprocessed_depfile.py
  	@echo Generating $@ from $<
 diff --git a/configure b/configure
-index dd93b00..938a245 100755
+index eece335..c92779c 100755
 --- a/configure
 +++ b/configure
 @@ -3325,7 +3325,7 @@ then :
@@ -62,7 +62,7 @@ index dd93b00..938a245 100755
  CXXFLAGS=$CXXFLAGS" -std=$cxxstd"
  
 diff --git a/fpu.h b/fpu.h
-index 7ca8df0..183db6d 100644
+index 4da5396..94c494f 100644
 --- a/fpu.h
 +++ b/fpu.h
 @@ -6,6 +6,8 @@
@@ -75,10 +75,10 @@ index 7ca8df0..183db6d 100644
  
  #ifdef HAVE_FEENABLEEXCEPT
 diff --git a/glrender.cc b/glrender.cc
-index d6da531..6ad366e 100644
+index 19afdf1..075844a 100644
 --- a/glrender.cc
 +++ b/glrender.cc
-@@ -1843,7 +1843,7 @@ void init()
+@@ -1800,7 +1800,7 @@ void init()
    char **argv=args(cmd,true);
    int argc=cmd.size();
  
@@ -88,10 +88,10 @@ index d6da531..6ad366e 100644
    glutInitContextProfile(GLUT_CORE_PROFILE);
  #endif
 -- 
-2.48.1
+2.52.0
 
 
-From 7b4a3e0e61bdb276f8f34810c521a708c44f5ad1 Mon Sep 17 00:00:00 2001
+From a3c281ce7f3ef9115c139f53c7ed7db8c6a50fbb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Joachim=20Mairb=C3=B6ck?= <j.mairboeck@gmail.com>
 Date: Sun, 20 Apr 2025 20:05:42 +0200
 Subject: Settings fixes
@@ -101,38 +101,45 @@ Put settings into ~/config/settings/asy instead of ~/.asy.
 Use `open` by default to open external files.
 
 diff --git a/GUI/xasyOptions.py b/GUI/xasyOptions.py
-index c8ecc85..2b079fb 100644
+index 132aba5..7846c35 100644
 --- a/GUI/xasyOptions.py
 +++ b/GUI/xasyOptions.py
-@@ -40,7 +40,7 @@ class xasyOptions:
+@@ -26,13 +26,13 @@ except ModuleNotFoundError:
+     def user_config_dir(appname: str, *args, **kwargs):
+         path = os.environ.get("XDG_CONFIG_HOME", "")
+         if not path.strip():
+-            path = os.path.expanduser("~/.local/share")
++            path = os.path.expanduser("~/config/settings")
+         return os.path.join(path, appname)
+ 
+     def user_state_dir(appname: str, *args, **kwargs):
+         path = os.environ.get("XDG_STATE_HOME", "")
+         if not path.strip():
+-            path = os.path.expanduser("~/.local/state")
++            path = os.path.expanduser("~/config/var")
+         return os.path.join(path, appname)
  
  
-     def settingsFileLocation(self):
--        folder = os.path.expanduser("~/.asy/")
-+        folder = os.path.expanduser("~/config/settings/asy/")
- 
-         searchOrder = ['.cson', '']
- 
-@@ -115,7 +115,7 @@ class xasyOptions:
-         if sys.platform[:3] == 'win':  # for windows, wince, win32, etc
-             # setAsyPathFromWindowsRegistry()
-             pass
--        folder = os.path.expanduser("~/.asy/")
-+        folder = os.path.expanduser("~/config/settings/asy/")
-         defaultPath = os.path.join(folder, self.configName + '.cson')
-         shutil.copy2(self._defaultOptLocation, defaultPath)
- 
-@@ -148,7 +148,7 @@ class xasyOpenRecent:
-             f.close()
+@@ -59,7 +59,7 @@ class xasyOptions:
+             self.options[key] = self.options[settingsName][key]
  
      def settingsFileLocation(self):
--        folder = os.path.expanduser("~/.asy/")
-+        folder = os.path.expanduser("~/config/settings/asy/")
+-        folders = [Path(user_config_dir("asymptote")), Path.home() / ".asy"]
++        folders = [Path(user_config_dir("asymptote")), Path.home() / "config" / "settings" / "asy"]
+         searchOrder = [".cson", ""]
  
-         currentFile = os.path.join(folder, self.configName + '.txt')
-         return os.path.normcase(currentFile)
+         for folder in folders:
+@@ -146,7 +146,7 @@ def setAsyPathFromWindowsRegistry():
+ 
+ class xasyOpenRecent:
+     def settingsFileLocation(self, ensure_exists: bool = True):
+-        folders = [Path(user_state_dir("asymptote")), Path.home() / ".asy"]
++        folders = [Path(user_state_dir("asymptote")), Path.home() / "config" / "settings" / "asy"]
+         file = "xasyrecents.txt"
+ 
+         for folder in folders:
 diff --git a/doc/asy.1 b/doc/asy.1
-index 74f427b..b68fb7d 100644
+index b0d8ea6..e0cdb9b 100644
 --- a/doc/asy.1
 +++ b/doc/asy.1
 @@ -22,8 +22,8 @@ can be negated by prepending
@@ -162,10 +169,10 @@ index 1a22329..e8a662b 100644
       import settings;
       batchView=true;
 diff --git a/settings.cc b/settings.cc
-index 027cc05..ba59e7b 100644
+index 1edf522..73f03be 100644
 --- a/settings.cc
 +++ b/settings.cc
-@@ -24,6 +24,11 @@
+@@ -22,6 +22,11 @@
  #include <unistd.h>
  #endif
  
@@ -177,7 +184,7 @@ index 027cc05..ba59e7b 100644
  #include "common.h"
  
  #if HAVE_GNU_GETOPT_H
-@@ -114,7 +119,7 @@ bool msdos=false;
+@@ -116,7 +121,7 @@ bool msdos=false;
  string HOME="HOME";
  string docdir=ASYMPTOTE_DOCDIR;
  const char pathSeparator=':';
@@ -186,7 +193,7 @@ index 027cc05..ba59e7b 100644
  string defaultPSViewer="open";
  string defaultPDFViewer="open";
  string defaultHTMLViewer="open";
-@@ -1701,7 +1706,16 @@ void initDir() {
+@@ -1708,7 +1713,16 @@ void initDir() {
      initdir=Getenv("ASYMPTOTE_HOME",msdos);
  
    if(initdir.empty())
@@ -204,5 +211,5 @@ index 027cc05..ba59e7b 100644
  #if defined(_WIN32)
    DWORD dirAttrib = GetFileAttributesA(initdir.c_str());
 -- 
-2.48.1
+2.52.0
 
