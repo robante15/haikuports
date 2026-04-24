@@ -3,52 +3,28 @@ From: Jerome Duval <jerome.duval@gmail.com>
 Date: Wed, 7 Aug 2019 16:21:12 +0300
 Subject: disable ebx on x86.
 
-
 diff --git a/configure b/configure
-index a0eed36..66f2a50 100755
+index 1759694..fc6e9e6 100755
 --- a/configure
 +++ b/configure
-@@ -7920,6 +7920,7 @@ case $target_os in
- haiku)
-     disable memalign
-     disable posix_memalign
-+    enabled x86_32 && enabled shared && disable ebx_available
-     ;;
- *-dos|freedos|opendos)
-     if test_cpp_condition sys/version.h "defined(__DJGPP__) && __DJGPP__ == 2 && __DJGPP_MINOR__ == 5"; then
+@@ -6042,9 +6042,11 @@ case $target_os in
+         SHFLAGS='-shared -Wl,-soname,$(SLIBNAME)'
+         ;;
+     haiku)
+-        prefix_default="/boot/common"
++        prefix_default="/boot/home"
+         network_extralibs="-lnetwork"
+         host_extralibs=
++        enabled x86_32
++        disable ebx_available
+         ;;
+     sunos)
+         SHFLAGS='-shared -Wl,-h,$$(@F)'
 -- 
 2.52.0
 
 
-From 939dc2f047fda255f376858d29f5af0b7a879035 Mon Sep 17 00:00:00 2001
-From: Adrien Destugues <pulkomandy@pulkomandy.tk>
-Date: Wed, 7 Aug 2019 16:21:32 +0300
-Subject: Re-enable memalign for Haiku
-
-This had been disabled in 2011:
-https://lists.ffmpeg.org/pipermail/ffmpeg-cvslog/2011-June/038362.html
-
-If there are still problems with it we should rather fix them on Haiku
-side.
-
-diff --git a/configure b/configure
-index 66f2a50..778b121 100755
---- a/configure
-+++ b/configure
-@@ -7918,8 +7918,6 @@ enabled threads || warn \
- 
- case $target_os in
- haiku)
--    disable memalign
--    disable posix_memalign
-     enabled x86_32 && enabled shared && disable ebx_available
-     ;;
- *-dos|freedos|opendos)
--- 
-2.52.0
-
-
-From fd6f461515d94a5effe96f9e2bc0c057cb6366d1 Mon Sep 17 00:00:00 2001
+From 4a8e94c10f03f9e19baf5fd189920d0b5907c92d Mon Sep 17 00:00:00 2001
 From: Augustin Cavalier <waddlesplash@gmail.com>
 Date: Fri, 21 Feb 2025 14:12:40 -0500
 Subject: libavutil: Forcibly enable use of pthread_setname_np.
@@ -58,7 +34,7 @@ was already included, so just redeclare the method and
 set the definition.
 
 diff --git a/libavutil/thread.h b/libavutil/thread.h
-index 2c00c7c..98f6edb 100644
+index 184e2d8..488c3eb 100644
 --- a/libavutil/thread.h
 +++ b/libavutil/thread.h
 @@ -37,6 +37,12 @@
@@ -78,7 +54,7 @@ index 2c00c7c..98f6edb 100644
 2.52.0
 
 
-From e19b47559b774b6b5c49fa5a7e731fb3b892bc41 Mon Sep 17 00:00:00 2001
+From 026287ae42626f8c7d23ccc987777b66fd6ee5c0 Mon Sep 17 00:00:00 2001
 From: Augustin Cavalier <waddlesplash@gmail.com>
 Date: Fri, 21 Feb 2025 14:35:08 -0500
 Subject: libavutil: Give slicethreads names.
