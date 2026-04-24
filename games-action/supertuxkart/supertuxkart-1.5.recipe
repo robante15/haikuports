@@ -14,13 +14,12 @@ or try to beat the high score in time trials on your own. Play battle mode again
 the computer or your friends, and more! For a greater challenge, race online against \
 players from all over the world and prove your racing skills!"
 HOMEPAGE="https://supertuxkart.net"
-COPYRIGHT="2021 SuperTuxKart Development Team"
+COPYRIGHT="2026 SuperTuxKart Development Team"
 LICENSE="GNU GPL v3"
-REVISION="3"
-SOURCE_URI="https://github.com/supertuxkart/stk-code/releases/download/$portVersion/supertuxkart-$portVersion-src.tar.xz"
-CHECKSUM_SHA256="eeabeb0d9801688a218f6f0a76ea3546a46a322ccaca9a258148ecacfe083ffd"
+REVISION="1"
+SOURCE_URI="https://github.com/supertuxkart/stk-code/releases/download/$portVersion/SuperTuxKart-$portVersion-src.tar.gz"
+CHECKSUM_SHA256="33cf8841e4ff4082d80b9248014295bbbea61d14683e86dff100e3ab8f7b27cb"
 SOURCE_DIR="SuperTuxKart-$portVersion-src"
-PATCHES="supertuxkart-$portVersion.patchset"
 ADDITIONAL_FILES="supertuxkart.rdef.in"
 
 ARCHITECTURES="all !x86_gcc2"
@@ -45,6 +44,7 @@ REQUIRES="
 	lib:libopenal$secondaryArchSuffix
 	lib:libpng16$secondaryArchSuffix
 	lib:libSDL2_2.0$secondaryArchSuffix
+	lib:libshaderc_shared$secondaryArchSuffix
 	lib:libsqlite3$secondaryArchSuffix
 	lib:libsquish$secondaryArchSuffix
 	lib:libssl$secondaryArchSuffix
@@ -66,6 +66,7 @@ BUILD_REQUIRES="
 	devel:libopenal$secondaryArchSuffix
 	devel:libpng16$secondaryArchSuffix
 	devel:libSDL2_2.0$secondaryArchSuffix
+	devel:libshaderc_shared$secondaryArchSuffix
 	devel:libsqlite3$secondaryArchSuffix
 	devel:libsquish$secondaryArchSuffix
 	devel:libssl$secondaryArchSuffix >= 3
