@@ -1,4 +1,4 @@
-From 1c17bb697f60f8e926a17922e15e5a40f062beea Mon Sep 17 00:00:00 2001
+From 3a308dbe96954dc8c0a7b3abc222e3ce040f80cd Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <me@trungnt2910.com>
 Date: Mon, 29 Jul 2024 22:55:42 +1000
 Subject: gdb/remote: fix assertion failure during startup
@@ -136,7 +136,7 @@ index 1d8d9b1..823677c 100644
 2.51.0
 
 
-From 30dd4b4d92875f1bda40f0f20409d59cf88171dd Mon Sep 17 00:00:00 2001
+From cc7906ee933fdefe4de9dce2af276a9416dd6d1f Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <57174311+trungnt2910@users.noreply.github.com>
 Date: Tue, 28 May 2024 22:31:22 +1000
 Subject: gdbserver: Initial Haiku support
@@ -5227,7 +5227,7 @@ index 22eaf54..1f36dc4 100644
 2.51.0
 
 
-From e9fbef7b0a7d726e6f8aaf6685781aa6173841f7 Mon Sep 17 00:00:00 2001
+From 3103eec78807308a02c008090b204a63caff9e07 Mon Sep 17 00:00:00 2001
 From: Trung Nguyen <me@trungnt2910.com>
 Date: Mon, 1 Jul 2024 10:32:51 +0700
 Subject: gdb: Initial Haiku support
@@ -7154,7 +7154,7 @@ index 2e98e32..4e6eccc 100644
 2.51.0
 
 
-From 26cab6f5b142020f9de71af58ae3d7b5acb34315 Mon Sep 17 00:00:00 2001
+From 0a3676f8e66f02f1071a59e0b50f35afe255ddf7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Sat, 7 Mar 2026 21:55:17 +0100
 Subject: gdb: Update Haiku support for 16.x
@@ -7309,7 +7309,7 @@ index 5f6a90f..bd023f5 100644
 2.51.0
 
 
-From e779feb2ea8459e128eaf872df55da12bac75ab0 Mon Sep 17 00:00:00 2001
+From 9f35d433e853dd48c9a1d709187dda3c0bd263d1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Sat, 7 Mar 2026 21:56:27 +0100
 Subject: gdbserver: Update Haiku support for 16.x
@@ -7484,7 +7484,7 @@ index 41295d5..b0551b8 100644
 2.51.0
 
 
-From ba1e555af862261b00a963f7022ddba5e39cc9df Mon Sep 17 00:00:00 2001
+From b3aeeb7220792fa5ac68966def8bef3cb108f3ec Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Wed, 11 Mar 2026 17:00:20 +0100
 Subject: gdb: Update Haiku support for 17.x
@@ -7745,7 +7745,7 @@ index bd023f5..092b2c5 100644
 2.51.0
 
 
-From 5c1f65f2c0e9cef3d868a2a42138f54b48efe2b6 Mon Sep 17 00:00:00 2001
+From de9c006b73665aa811102213f3cae79907c7a6b1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
 Date: Wed, 11 Mar 2026 17:03:47 +0100
 Subject: gdbserver: Update Haiku support for 17.x
@@ -7794,6 +7794,38 @@ index 1167305..3c92b90 100644
  
    void post_create_inferior () override;
  
+-- 
+2.51.0
+
+
+From 2775f0d348c1a059327dda982651b3e0695802d7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=A9r=C3=B4me=20Duval?= <jerome.duval@gmail.com>
+Date: Sat, 25 Apr 2026 19:16:53 +0200
+Subject: gdbsupport: hack negative value check for sigaction
+
+
+diff --git a/gdbsupport/signals-state-save-restore.cc b/gdbsupport/signals-state-save-restore.cc
+index 8247434..0732b98 100644
+--- a/gdbsupport/signals-state-save-restore.cc
++++ b/gdbsupport/signals-state-save-restore.cc
+@@ -48,7 +48,7 @@ save_original_signals_state (bool quiet)
+       struct sigaction *oldact = &original_signal_actions[i];
+ 
+       res = sigaction (i, NULL, oldact);
+-      if (res == -1 && errno == EINVAL)
++      if (res == -1 && (errno == EINVAL || errno == -EINVAL))
+ 	{
+ 	  /* Some signal numbers in the range are invalid.  */
+ 	  continue;
+@@ -97,7 +97,7 @@ restore_original_signals_state (void)
+   for (i = 1; i < NSIG; i++)
+     {
+       res = sigaction (i, &original_signal_actions[i], NULL);
+-      if (res == -1 && errno == EINVAL)
++      if (res == -1 && (errno == EINVAL || errno == -EINVAL))
+ 	{
+ 	  /* Some signal numbers in the range are invalid.  */
+ 	  continue;
 -- 
 2.51.0
 
