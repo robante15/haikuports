@@ -1,0 +1,93 @@
+From 10bdc693bf0d7f0ce6fb9d8762e9aa6baa267050 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fran=C3=A7ois=20Revol?= <revol@free.fr>
+Date: Sat, 2 Dec 2023 02:02:15 +0100
+Subject: Fix INTERFACE_INCLUDE_DIRECTORIES on Haiku
+
+Not sure if the IMPORTED_LOCATION shouldn't be develop/lib
+
+diff --git a/Makefile.am b/Makefile.am
+index 72f2fca..2eb13d5 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -71,6 +71,7 @@ _EXTRA_DIST_CMAKE = \
+     cmake/autotools/expat__linux.cmake.in \
+     cmake/autotools/expat__macos.cmake.in \
+     cmake/autotools/expat__windows.cmake.in \
++    cmake/autotools/expat-noconfig__haiku.cmake.in \
+     cmake/autotools/expat-noconfig__linux.cmake.in \
+     cmake/autotools/expat-noconfig__macos.cmake.in \
+     cmake/autotools/expat-noconfig__windows.cmake.in \
+diff --git a/cmake/autotools/expat-noconfig__haiku.cmake.in b/cmake/autotools/expat-noconfig__haiku.cmake.in
+new file mode 100644
+index 0000000..c1aad9d
+--- /dev/null
++++ b/cmake/autotools/expat-noconfig__haiku.cmake.in
+@@ -0,0 +1,26 @@
++#----------------------------------------------------------------
++# Generated CMake target import file for configuration "NoConfig".
++#----------------------------------------------------------------
++
++# Commands may need to know the format version.
++set(CMAKE_IMPORT_FILE_VERSION 1)
++
++get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
++
++set_target_properties(expat::expat PROPERTIES
++  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/develop/headers${CMAKE_HAIKU_SECONDARY_ARCH_SUBDIR}"
++  INTERFACE_LINK_LIBRARIES "m"
++)
++
++# Import target "expat::expat" for configuration "NoConfig"
++set_property(TARGET expat::expat APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
++set_target_properties(expat::expat PROPERTIES
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/@LIBDIR_BASENAME@/libexpat.so.@SO_MAJOR@.@SO_MINOR@.@SO_PATCH@"
++  IMPORTED_SONAME_NOCONFIG "libexpat.so.@SO_MAJOR@"
++  )
++
++list(APPEND _cmake_import_check_targets expat::expat )
++list(APPEND _cmake_import_check_files_for_expat::expat "${_IMPORT_PREFIX}/lib/@LIBDIR_BASENAME@/libexpat.so.@SO_MAJOR@.@SO_MINOR@.@SO_PATCH@" )
++
++# Commands beyond this point should not need to know the version.
++set(CMAKE_IMPORT_FILE_VERSION)
+diff --git a/configure.ac b/configure.ac
+index 6d028b5..b376f77 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -453,6 +453,10 @@ AS_CASE("${host_os}",
+     CMAKE_SOURCE=cmake/autotools/expat__windows.cmake.in
+     CMAKE_NOCONFIG_SOURCE=cmake/autotools/expat-noconfig__windows.cmake.in
+   ],
++  [haiku*], [
++    CMAKE_SOURCE=cmake/autotools/expat__linux.cmake.in
++    CMAKE_NOCONFIG_SOURCE=cmake/autotools/expat-noconfig__haiku.cmake.in
++  ],
+   [
+     CMAKE_SOURCE=cmake/autotools/expat__linux.cmake.in
+     CMAKE_NOCONFIG_SOURCE=cmake/autotools/expat-noconfig__linux.cmake.in
+-- 
+2.51.0
+
+
+From 0e2c67bf66ce2420e62adc191dc11fb3ec9eb0b3 Mon Sep 17 00:00:00 2001
+From: Jerome Duval <jerome.duval@gmail.com>
+Date: Wed, 7 Feb 2024 18:47:27 +0100
+Subject: can't allocate so much on Haiku
+
+
+diff --git a/tests/basic_tests.c b/tests/basic_tests.c
+index 02d1d5f..c9a5b60 100644
+--- a/tests/basic_tests.c
++++ b/tests/basic_tests.c
+@@ -3109,7 +3109,7 @@ START_TEST(test_buffer_can_grow_to_max) {
+       "withreadabilityprettygreatithinkanywaysthisisprobablylongenoughbye><x a='"};
+   const int num_prefixes = sizeof(prefixes) / sizeof(prefixes[0]);
+   int maxbuf = INT_MAX / 2 + (INT_MAX & 1); // round up without overflow
+-#if defined(__MINGW32__) && ! defined(__MINGW64__)
++#if defined(__HAIKU__) || (defined(__MINGW32__) && ! defined(__MINGW64__))
+   // workaround for mingw/wine32 on GitHub CI not being able to reach 1GiB
+   // Can we make a big allocation?
+   for (int i = 1; i <= 2; i++) {
+-- 
+2.51.0
+
+
