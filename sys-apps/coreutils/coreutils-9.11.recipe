@@ -20,7 +20,7 @@ LICENSE="GNU GPL v3"
 REVISION="1"
 SOURCE_URI="https://ftpmirror.gnu.org/coreutils/coreutils-$portVersion.tar.xz
 	https://ftp.gnu.org/gnu/coreutils/coreutils-$portVersion.tar.xz"
-CHECKSUM_SHA256="19bcb6ca867183c57d77155eae946c5eced88183143b45ca51ad7d26c628ca75"
+CHECKSUM_SHA256="394024eda0a5955217ceda9cd1201e65dc8fa3aa29c2951135a49521d57c3cc3"
 PATCHES="coreutils-$portVersion.patchset"
 
 ARCHITECTURES="all !x86_gcc2"
@@ -276,13 +276,14 @@ BUILD()
 		configureFlags=--disable-year2038
 	fi
 	export CPPFLAGS=-Dst_birthtim=st_crtim
+	export LIBS=-lgnu
 	FORCE_UNSAFE_CONFIGURE=1 gnulib_cv_have_boot_time=yes \
 		runConfigure --omit-dirs binDir ./configure $configureFlags \
 		 --bindir=$commandBinDir \
 		--without-included-regex \
 		--disable-rpath --with-gnu-ld \
 		--enable-no-install-program=df,pinky,users,who \
-		--enable-install-program=hostname
+		--enable-install-program=hostname,kill,uptime
 	touch doc/*.info
 	make $jobArgs
 }

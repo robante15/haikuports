@@ -1,11 +1,11 @@
-From cad02d90d5d789d7fed678da3c9a2cdde6e7da8d Mon Sep 17 00:00:00 2001
+From b71e62c9b388072a6ac12e124d40b77561012952 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Tue, 13 May 2014 17:18:52 +0000
 Subject: define __USE_GNU for wempcpy
 
 
 diff --git a/lib/fnmatch.c b/lib/fnmatch.c
-index 0270bfd..36438dc 100644
+index 1b8be95..ad40e3e 100644
 --- a/lib/fnmatch.c
 +++ b/lib/fnmatch.c
 @@ -23,6 +23,9 @@
@@ -22,14 +22,14 @@ index 0270bfd..36438dc 100644
 2.51.0
 
 
-From 06bb6947c7888dbe75cdecedab4a17de324f501b Mon Sep 17 00:00:00 2001
+From ca231d852006d032575bc80d2789b325fe76297e Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Tue, 13 May 2014 17:22:10 +0000
 Subject: force declaration of rpl_inet_ntop
 
 
 diff --git a/lib/arpa_inet.in.h b/lib/arpa_inet.in.h
-index d7417bf..0a56cfe 100644
+index a9c93d0..b18f3f2 100644
 --- a/lib/arpa_inet.in.h
 +++ b/lib/arpa_inet.in.h
 @@ -130,7 +130,7 @@ ntohl (uint32_t value)
@@ -45,14 +45,14 @@ index d7417bf..0a56cfe 100644
 2.51.0
 
 
-From c0de634e5440f083be9bd76893140ba7ba773833 Mon Sep 17 00:00:00 2001
+From 92051a0e5ac31e8e48f8ec4d0ec7e14542eaab94 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Tue, 13 May 2014 17:32:36 +0000
 Subject: Haiku defines mknod in unistd.h
 
 
 diff --git a/lib/mknod.c b/lib/mknod.c
-index cc2dfe5..28a2c8c 100644
+index 56a9ace..478bc69 100644
 --- a/lib/mknod.c
 +++ b/lib/mknod.c
 @@ -18,6 +18,7 @@
@@ -67,17 +67,17 @@ index cc2dfe5..28a2c8c 100644
 2.51.0
 
 
-From 04ca63f414a974765ee6fb890c3c2dd697e68433 Mon Sep 17 00:00:00 2001
+From 174b0c62362171546e0054557f7a81d92bb7b752 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Tue, 13 May 2014 17:35:25 +0000
 Subject: protect the label, not used on Haiku
 
 
 diff --git a/lib/mountlist.c b/lib/mountlist.c
-index 1a1e7fb..c12e50a 100644
+index 77ea8ce..508670a 100644
 --- a/lib/mountlist.c
 +++ b/lib/mountlist.c
-@@ -1292,7 +1292,8 @@ read_file_system_list (bool need_fs_type)
+@@ -1252,7 +1252,8 @@ read_file_system_list (bool need_fs_type)
    return mount_list;
  
  
@@ -87,7 +87,7 @@ index 1a1e7fb..c12e50a 100644
    {
      int saved_errno = errno;
      *mtail = NULL;
-@@ -1307,6 +1308,7 @@ read_file_system_list (bool need_fs_type)
+@@ -1267,6 +1268,7 @@ read_file_system_list (bool need_fs_type)
      errno = saved_errno;
      return NULL;
    }
@@ -99,14 +99,14 @@ index 1a1e7fb..c12e50a 100644
 2.51.0
 
 
-From 4b4c6b8640ea0016238696332fe0c8e3534de16b Mon Sep 17 00:00:00 2001
+From d78c98c2f854d0b2fa577cf3eb6e1ad864ee1d34 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Thu, 15 May 2014 15:40:32 +0000
 Subject: strchrnul needs __USE_GNU on Haiku
 
 
 diff --git a/lib/regex.h b/lib/regex.h
-index e9ab85e..c0eb2b1 100644
+index df35c93..38ea2e5 100644
 --- a/lib/regex.h
 +++ b/lib/regex.h
 @@ -30,8 +30,10 @@ extern "C" {
@@ -121,7 +121,7 @@ index e9ab85e..c0eb2b1 100644
  #ifdef _REGEX_LARGE_OFFSETS
  
 diff --git a/lib/string.in.h b/lib/string.in.h
-index fdcdd21..17c73ce 100644
+index f04bbc6..9c1e70f 100644
 --- a/lib/string.in.h
 +++ b/lib/string.in.h
 @@ -37,6 +37,9 @@
@@ -138,48 +138,48 @@ index fdcdd21..17c73ce 100644
 2.51.0
 
 
-From 52292482f8d2431209387e7b92a6ec61ae5b728e Mon Sep 17 00:00:00 2001
+From a3d744d64cdcb50dd06f9f81f94fc12b238132ea Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Thu, 15 May 2014 20:13:58 +0000
 Subject: don't build hostid, nice, users, who
 
 
 diff --git a/Makefile.in b/Makefile.in
-index 0a19863..ea71298 100644
+index 0700c2a..935e4c5 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -1274,8 +1274,8 @@ CONFIG_CLEAN_VPATH_FILES =
+@@ -1275,8 +1275,8 @@ CONFIG_CLEAN_FILES = build-aux/makeinfo-wrapper.sh
+ CONFIG_CLEAN_VPATH_FILES =
  am__EXEEXT_1 = src/arch$(EXEEXT) src/coreutils$(EXEEXT) \
- 	src/hostname$(EXEEXT)
- am__EXEEXT_2 = src/chcon$(EXEEXT) src/chroot$(EXEEXT) src/df$(EXEEXT) \
--	src/hostid$(EXEEXT) src/libstdbuf.so$(EXEEXT) \
--	src/nice$(EXEEXT) src/pinky$(EXEEXT) src/runcon$(EXEEXT) \
+ 	src/hostname$(EXEEXT) src/kill$(EXEEXT) src/uptime$(EXEEXT)
+-am__EXEEXT_2 = src/chroot$(EXEEXT) src/df$(EXEEXT) src/hostid$(EXEEXT) \
+-	src/libstdbuf.so$(EXEEXT) src/nice$(EXEEXT) src/pinky$(EXEEXT) \
++am__EXEEXT_2 = src/chroot$(EXEEXT) src/df$(EXEEXT) \
 +	src/libstdbuf.so$(EXEEXT) \
-+	src/runcon$(EXEEXT) \
  	src/stdbuf$(EXEEXT) src/stty$(EXEEXT) src/timeout$(EXEEXT) \
  	src/users$(EXEEXT) src/who$(EXEEXT)
- am__EXEEXT_3 = src/[$(EXEEXT) src/b2sum$(EXEEXT) src/base64$(EXEEXT) \
-@@ -7857,7 +7857,7 @@ WARN_ON_USE_H = $(top_srcdir)/lib/warn-on-use.h
- # FIXME: once lib/ and gnulib-tests/ are also converted, hoist to Makefile.am
+ am__EXEEXT_3 = src/chcon$(EXEEXT) src/runcon$(EXEEXT)
+@@ -7898,7 +7898,7 @@ WARN_ON_USE_H = $(top_srcdir)/lib/warn-on-use.h
  AM_CFLAGS = $(WERROR_CFLAGS)
- no_install__progs = src/arch src/coreutils src/hostname
--build_if_possible__progs = src/chcon src/chroot src/df src/hostid \
-+build_if_possible__progs = src/chcon src/chroot src/df \
- 	src/libstdbuf.so src/nice src/pinky src/runcon src/stdbuf \
- 	src/stty src/timeout src/users src/who
- default__progs = src/[ src/b2sum src/base64 src/base32 src/basenc \
+ no_install__progs = src/arch src/coreutils src/hostname src/kill \
+ 	src/uptime
+-build_if_possible__progs = src/chroot src/df src/hostid \
++build_if_possible__progs = src/chroot src/df \
+ 	src/libstdbuf.so src/nice src/pinky src/stdbuf src/stty \
+ 	src/timeout src/users src/who
+ build_if_appropriate__progs = src/chcon src/runcon
 -- 
 2.51.0
 
 
-From 93e39d61231cbb4114e9f49c20bf7ca52e8c5ade Mon Sep 17 00:00:00 2001
+From cef5d321d303a1cf4b51720ad7e4dc15db3bd0bf Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Fri, 6 Feb 2015 20:24:12 +0000
 Subject: import Haiku changes, fix warnings.
 
 
 diff --git a/lib/localcharset.c b/lib/localcharset.c
-index 79a55c5..24cdad6 100644
+index 4840913..b00e19f 100644
 --- a/lib/localcharset.c
 +++ b/lib/localcharset.c
 @@ -41,6 +41,13 @@
@@ -197,7 +197,7 @@ index 79a55c5..24cdad6 100644
  
  #if !defined WINDOWS_NATIVE
 diff --git a/src/copy.c b/src/copy.c
-index 4af66c8..624664c 100644
+index a53fb8f..4d03feb 100644
 --- a/src/copy.c
 +++ b/src/copy.c
 @@ -18,6 +18,7 @@
@@ -219,7 +219,7 @@ index 4af66c8..624664c 100644
  #if USE_XATTR
  # include <attr/error_context.h>
  # include <attr/libattr.h>
-@@ -256,6 +261,92 @@ is_ancestor (const struct stat *sb, const struct dir_list *ancestors)
+@@ -254,6 +259,92 @@ is_ancestor (const struct stat *sb, const struct dir_list *ancestors)
    return false;
  }
  
@@ -312,7 +312,7 @@ index 4af66c8..624664c 100644
  static bool
  errno_unsupported (int err)
  {
-@@ -399,6 +490,10 @@ copy_dir (char const *src_name_in, char const *dst_name_in,
+@@ -397,6 +488,10 @@ copy_dir (char const *src_name_in, char const *dst_name_in,
        error (0, errno, _("cannot access %s"), quoteaf (src_name_in));
        return false;
      }
@@ -323,7 +323,7 @@ index 4af66c8..624664c 100644
  
    /* For cp's -H option, dereference command line arguments, but do not
       dereference symlinks that are found via recursive traversal.  */
-@@ -1034,6 +1129,11 @@ copy_reg (char const *src_name, char const *dst_name,
+@@ -1029,6 +1124,11 @@ copy_reg (char const *src_name, char const *dst_name,
        return_val = false;
        goto close_src_and_dst_desc;
      }
@@ -335,7 +335,7 @@ index 4af66c8..624664c 100644
  
    /* If extra permissions needed for copy_xattr didn't happen (e.g.,
       due to umask) chmod to add them temporarily; if that fails give
-@@ -2143,6 +2243,12 @@ skip:
+@@ -2138,6 +2238,12 @@ skip:
                                    true, x->verbose, dereference))
              goto un_backup;
  
@@ -348,7 +348,7 @@ index 4af66c8..624664c 100644
            return true;
          }
      }
-@@ -2594,6 +2700,11 @@ skip:
+@@ -2589,6 +2695,11 @@ skip:
                   preserving owner/group is a potential security problem.  */
              }
          }
@@ -361,7 +361,7 @@ index 4af66c8..624664c 100644
    else
      {
 diff --git a/src/copy.h b/src/copy.h
-index 1f2b2bb..61f6294 100644
+index 0f3616c..288a6e2 100644
 --- a/src/copy.h
 +++ b/src/copy.h
 @@ -208,6 +208,9 @@ struct cp_options
@@ -375,7 +375,7 @@ index 1f2b2bb..61f6294 100644
       Set this only if the kernel is SELinux enabled.  */
    bool preserve_security_context;
 diff --git a/src/cp.c b/src/cp.c
-index 317d667..164f13c 100644
+index e17484b..33253b4 100644
 --- a/src/cp.c
 +++ b/src/cp.c
 @@ -60,6 +60,7 @@ struct dir_attr
@@ -387,22 +387,25 @@ index 317d667..164f13c 100644
    DEBUG_OPTION,
    NO_PRESERVE_ATTRIBUTES_OPTION,
 @@ -121,6 +122,7 @@ static struct option const long_opts[] =
-   {"debug", no_argument, nullptr, DEBUG_OPTION},
-   {"dereference", no_argument, nullptr, 'L'},
-   {"force", no_argument, nullptr, 'f'},
-+  {"ignore-attributes", no_argument, nullptr, IGNORE_ATTRIBUTES},
-   {"interactive", no_argument, nullptr, 'i'},
-   {"link", no_argument, nullptr, 'l'},
-   {"no-clobber", no_argument, nullptr, 'n'},   /* Deprecated.  */
-@@ -185,6 +187,7 @@ Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.\n\
-   -f, --force                  if an existing destination file cannot be\n\
-                                  opened, remove it and try again (this option\n\
-                                  is ignored when the -n option is also used)\n\
-+      --ignore-attributes      do not copy attributes\n\
-   -i, --interactive            prompt before overwrite (overrides a previous -n\
- \n\
-                                   option)\n\
-@@ -855,6 +858,7 @@ cp_option_init (struct cp_options *x)
+   {"debug", no_argument, NULL, DEBUG_OPTION},
+   {"dereference", no_argument, NULL, 'L'},
+   {"force", no_argument, NULL, 'f'},
++  {"ignore-attributes", no_argument, NULL, IGNORE_ATTRIBUTES},
+   {"interactive", no_argument, NULL, 'i'},
+   {"link", no_argument, NULL, 'l'},
+   {"no-clobber", no_argument, NULL, 'n'},   /* Deprecated.  */
+@@ -201,6 +203,10 @@ Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.\n\
+   -f, --force\n\
+          if an existing destination file cannot be opened, remove it and try\n\
+          again (this option is ignored when the -n option is also used)\n\
++"));
++      oputs (_("\
++      --ignore-attributes\n\
++         do not copy attributes\n\
+ "));
+       oputs (_("\
+   -i, --interactive\n\
+@@ -909,6 +915,7 @@ cp_option_init (struct cp_options *x)
    x->data_copy_required = true;
    x->require_preserve = false;
    x->recursive = false;
@@ -410,7 +413,7 @@ index 317d667..164f13c 100644
    x->sparse_mode = SPARSE_AUTO;
    x->symbolic_link = false;
    x->set_mode = false;
-@@ -1061,6 +1065,10 @@ main (int argc, char **argv)
+@@ -1114,6 +1121,10 @@ main (int argc, char **argv)
            x.dereference = DEREF_COMMAND_LINE_ARGUMENTS;
            break;
  
@@ -422,7 +425,7 @@ index 317d667..164f13c 100644
            x.interactive = I_ASK_USER;
            break;
 diff --git a/src/dircolors.h b/src/dircolors.h
-index 1907b03..9b48d8c 100644
+index af33e22..9f46113 100644
 --- a/src/dircolors.h
 +++ b/src/dircolors.h
 @@ -72,7 +72,7 @@ static char const G_line[] =
@@ -435,7 +438,7 @@ index 1907b03..9b48d8c 100644
    '#',' ','T','h','i','s',' ','i','s',' ','f','o','r',' ','r','e','g','u','l','a','r',' ','f','i','l','e','s',' ','w','i','t','h',' ','e','x','e','c','u','t','e',' ','p','e','r','m','i','s','s','i','o','n',':',0,
    'E','X','E','C',' ','0','1',';','3','2',0,
 diff --git a/src/dircolors.hin b/src/dircolors.hin
-index ac57522..86de811 100644
+index a470767..123de6c 100644
 --- a/src/dircolors.hin
 +++ b/src/dircolors.hin
 @@ -75,7 +75,7 @@ SETUID 37;41	# regular file that is setuid (u+s)
@@ -448,10 +451,10 @@ index ac57522..86de811 100644
  
  # This is for regular files with execute permission:
 diff --git a/src/ls.c b/src/ls.c
-index 7144d0d..faa77c9 100644
+index 7dbcfa7..588b30f 100644
 --- a/src/ls.c
 +++ b/src/ls.c
-@@ -747,6 +747,11 @@ static struct ignore_pattern *hide_patterns;
+@@ -740,6 +740,11 @@ static struct ignore_pattern *hide_patterns;
     want to mess up the terminal if control chars get sent to it, and some
     quoting methods pass through control chars as-is.  */
  static bool qmark_funny_chars;
@@ -463,7 +466,7 @@ index 7144d0d..faa77c9 100644
  
  /* Quoting options for file and dir name output.  */
  
-@@ -4392,6 +4397,7 @@ print_long_format (const struct fileinfo *f)
+@@ -4345,6 +4350,7 @@ print_long_format (const struct fileinfo *f)
        p = buf;
      }
  
@@ -471,7 +474,7 @@ index 7144d0d..faa77c9 100644
    if (f->stat_ok
        && (S_ISCHR (f->stat.st_mode) || S_ISBLK (f->stat.st_mode)))
      {
-@@ -4405,6 +4411,7 @@ print_long_format (const struct fileinfo *f)
+@@ -4358,6 +4364,7 @@ print_long_format (const struct fileinfo *f)
                      (uintmax_t) minor (f->stat.st_rdev));
      }
    else
@@ -480,7 +483,7 @@ index 7144d0d..faa77c9 100644
        char hbuf[LONGEST_HUMAN_READABLE + 1];
        char const *size =
 diff --git a/src/mv.c b/src/mv.c
-index cf1ac56..4802224 100644
+index cd6aab4..42a30f5 100644
 --- a/src/mv.c
 +++ b/src/mv.c
 @@ -143,6 +143,7 @@ cp_option_init (struct cp_options *x)
@@ -492,7 +495,7 @@ index cf1ac56..4802224 100644
    x->preserve_xattr = true;
    x->require_preserve_xattr = false;
 diff --git a/src/remove.c b/src/remove.c
-index 86226b1..9935055 100644
+index 99696e5..77f32b2 100644
 --- a/src/remove.c
 +++ b/src/remove.c
 @@ -218,7 +218,7 @@ prompt (FTS const *fts, FTSENT const *ent, bool is_dir,
@@ -505,7 +508,7 @@ index 86226b1..9935055 100644
        if (0 <= write_protected && dirent_type == DT_UNKNOWN)
          {
 diff --git a/src/uname.c b/src/uname.c
-index 96c532b..63067e9 100644
+index 5f7a35d..07cb7f7 100644
 --- a/src/uname.c
 +++ b/src/uname.c
 @@ -44,6 +44,10 @@
@@ -519,7 +522,7 @@ index 96c532b..63067e9 100644
  #include "system.h"
  #include "quote.h"
  #include "uname.h"
-@@ -341,6 +345,30 @@ main (int argc, char **argv)
+@@ -357,6 +361,30 @@ main (int argc, char **argv)
              element = processor;
          }
  #endif
@@ -554,7 +557,7 @@ index 96c532b..63067e9 100644
 2.51.0
 
 
-From 843c5d641aea59c409163df3f671309211dfb22a Mon Sep 17 00:00:00 2001
+From 2558f60261a3053fe590a6e9f1697f033019c886 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Mon, 1 Nov 2021 21:08:55 +0100
 Subject: ln: handle negative errno
@@ -562,10 +565,10 @@ Subject: ln: handle negative errno
 explicit check for -1 which is a special value in this code.
 
 diff --git a/src/copy.c b/src/copy.c
-index 624664c..376edd7 100644
+index 4d03feb..fa88f95 100644
 --- a/src/copy.c
 +++ b/src/copy.c
-@@ -1657,7 +1657,7 @@ create_hard_link (char const *src_name, int src_dirfd, char const *src_relname,
+@@ -1652,7 +1652,7 @@ create_hard_link (char const *src_name, int src_dirfd, char const *src_relname,
    int err = force_linkat (src_dirfd, src_relname, dst_dirfd, dst_relname,
                            dereference ? AT_SYMLINK_FOLLOW : 0,
                            replace, -1);
@@ -573,8 +576,8 @@ index 624664c..376edd7 100644
 +  if (err != 0 && err != -1)
      {
  
-       char *a_src_name = nullptr;
-@@ -1669,7 +1669,7 @@ create_hard_link (char const *src_name, int src_dirfd, char const *src_relname,
+       char *a_src_name = NULL;
+@@ -1664,7 +1664,7 @@ create_hard_link (char const *src_name, int src_dirfd, char const *src_relname,
        free (a_src_name);
        return false;
      }
@@ -583,7 +586,7 @@ index 624664c..376edd7 100644
      printf (_("removed %s\n"), quoteaf (dst_name));
    return true;
  }
-@@ -2562,7 +2562,7 @@ skip:
+@@ -2557,7 +2557,7 @@ skip:
  
        int err = force_symlinkat (src_name, dst_dirfd, dst_relname,
                                   x->unlink_dest_after_failed_open, -1);
@@ -592,7 +595,7 @@ index 624664c..376edd7 100644
          {
            error (0, err, _("cannot create symbolic link %s to %s"),
                   quoteaf_n (0, dst_name), quoteaf_n (1, src_name));
-@@ -2649,7 +2649,7 @@ skip:
+@@ -2644,7 +2644,7 @@ skip:
  
        int symlink_err = force_symlinkat (src_link_val, dst_dirfd, dst_relname,
                                           x->unlink_dest_after_failed_open, -1);
@@ -601,7 +604,7 @@ index 624664c..376edd7 100644
            && !new_dst && S_ISLNK (dst_sb.st_mode)
            && dst_sb.st_size == strlen (src_link_val))
          {
-@@ -2667,7 +2667,7 @@ skip:
+@@ -2662,7 +2662,7 @@ skip:
              }
          }
        free (src_link_val);
@@ -611,7 +614,7 @@ index 624664c..376edd7 100644
            error (0, symlink_err, _("cannot create symbolic link %s"),
                   quoteaf (dst_name));
 diff --git a/src/ln.c b/src/ln.c
-index 7a366bc..3590e5f 100644
+index 335c771..3c2816f 100644
 --- a/src/ln.c
 +++ b/src/ln.c
 @@ -152,7 +152,7 @@ convert_abs_rel (char const *from, char const *target)
@@ -624,8 +627,8 @@ index 7a366bc..3590e5f 100644
     already exist and -r is not specified.  */
  
 @@ -183,7 +183,7 @@ do_link (char const *source, int destdir_fd, char const *dest_base,
-   char *backup_base = nullptr;
-   char *rel_source = nullptr;
+   char *backup_base = NULL;
+   char *rel_source = NULL;
    int nofollow_flag = logical ? 0 : AT_SYMLINK_NOFOLLOW;
 -  if (link_errno < 0)
 +  if (link_errno == -1)
@@ -663,14 +666,14 @@ index 7a366bc..3590e5f 100644
 2.51.0
 
 
-From 2e61df991a91b21b41cbf20d677d72aaa3aa4b48 Mon Sep 17 00:00:00 2001
+From 6198abe264cdd1f5eda6c49f32ef0269f6cf430d Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Tue, 16 Nov 2021 10:22:30 +0100
 Subject: uptime: make utmp error not critical
 
 
 diff --git a/src/uptime.c b/src/uptime.c
-index 0faaf06..16ee50f 100644
+index 4de00a8..a0b3826 100644
 --- a/src/uptime.c
 +++ b/src/uptime.c
 @@ -45,7 +45,7 @@ print_uptime (idx_t n, STRUCT_UTMP const *utmp_buf)
@@ -686,7 +689,7 @@ index 0faaf06..16ee50f 100644
 2.51.0
 
 
-From 259156aa351b093f7222aacf149a3df48187b236 Mon Sep 17 00:00:00 2001
+From f4954b5e050857ba50d6954f289f9a9302f1655f Mon Sep 17 00:00:00 2001
 From: PulkoMandy <pulkomandy@pulkomandy.tk>
 Date: Fri, 30 Jun 2023 20:14:30 +0200
 Subject: stty: fix sign extension in check_speed
@@ -696,10 +699,10 @@ expansion. So, if you set a speed_t to -1, it is converted to 255 and
 doesn't compare equal to -1.
 
 diff --git a/src/stty.c b/src/stty.c
-index 919e32b..2db1c8e 100644
+index d2de216..9d14452 100644
 --- a/src/stty.c
 +++ b/src/stty.c
-@@ -2074,7 +2074,7 @@ display_all (struct termios *mode, char const *device_name)
+@@ -2075,7 +2075,7 @@ display_all (struct termios *mode, char const *device_name)
  static void
  check_speed (struct termios *mode)
  {
