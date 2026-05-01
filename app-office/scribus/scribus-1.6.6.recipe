@@ -7,11 +7,11 @@ user-friendly interface, Scribus supports professional publishing features, \
 such as color separations, CMYK and spot colors, ICC color management, and \
 versatile PDF creation."
 HOMEPAGE="https://www.scribus.net"
-COPYRIGHT="2014-2025 Scribus Team"
+COPYRIGHT="2014-2026 Scribus Team"
 LICENSE="GNU GPL v2"
 REVISION="1"
 SOURCE_URI="https://sourceforge.net/projects/scribus/files/scribus/$portVersion/scribus-$portVersion.tar.xz"
-CHECKSUM_SHA256="09bdb736a8ff8a437191458a36d847cc0adeca0fc059cf696474e0ba6f59ac6a"
+CHECKSUM_SHA256="fdfe3e7cbe84b760b38d0561ed8736f9d25d4923adde6e15e03760d83be6166d"
 PATCHES="scribus-$portVersion.patchset"
 ADDITIONAL_FILES="scribus.rdef.in"
 
@@ -24,6 +24,8 @@ PROVIDES="
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
+	graphicsmagick$secondaryArchSuffix
+	openscenegraph$secondaryArchSuffix
 	lib:libcairo$secondaryArchSuffix
 	lib:libcdr_0.1$secondaryArchSuffix
 	lib:libcrypto$secondaryArchSuffix
@@ -68,7 +70,9 @@ REQUIRES="
 
 BUILD_REQUIRES="
 	haiku${secondaryArchSuffix}_devel
-	devel:libboost_system$secondaryArchSuffix >= 1.88.0
+	graphicsmagick${secondaryArchSuffix}_devel
+	openscenegraph${secondaryArchSuffix}_devel
+	devel:libboost_filesystem$secondaryArchSuffix >= 1.90.0
 	devel:libcairo$secondaryArchSuffix
 	devel:libcdr_0.1$secondaryArchSuffix
 	devel:libcrypto$secondaryArchSuffix
@@ -87,7 +91,7 @@ BUILD_REQUIRES="
 	devel:libpagemaker_0.0$secondaryArchSuffix
 	devel:libpng16$secondaryArchSuffix
 	devel:libpodofo$secondaryArchSuffix
-	devel:libpoppler$secondaryArchSuffix >= 148
+	devel:libpoppler$secondaryArchSuffix >= 155
 	devel:libpython3.10$secondaryArchSuffix
 	devel:libQt5Core$secondaryArchSuffix
 	devel:libqxp_0.0$secondaryArchSuffix
@@ -114,6 +118,7 @@ BUILD()
 	cmake .  -DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=$appsDir/Scribus \
 		-DEXECUTABLE_OUTPUT_PATH=$appsDir/Scribus \
+		-DWANT_GRAPHICSMAGICK=1 \
 		-DPLUGINDIR=$appsDir/Scribus/plugins \
 		-DCMAKE_INSTALL_DATAROOTDIR=$dataDir \
 		-DSHAREDIR=$dataDir \
@@ -132,6 +137,9 @@ INSTALL()
 
 	mv $appsDir/Scribus/scribus $appsDir/Scribus/Scribus
 	rm -rf $appsDir/Scribus/bin
+
+	# cleanup
+	rm -rf $dataDir/{applications,icons,metainfo}
 
 	local APP_SIGNATURE="application/x-vnd.scribus"
 	local MAJOR="`echo "$portVersion" | cut -d. -f1`"

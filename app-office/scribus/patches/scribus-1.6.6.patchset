@@ -1,11 +1,11 @@
-From 436c821c08d66e3555bdb511191c0599c9066e33 Mon Sep 17 00:00:00 2001
+From 8ab227e367921a6e42c19427369bd6dd582ded62 Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Mon, 16 Nov 2020 21:51:24 +1000
 Subject: Fix build
 
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4ced17e..9b5051d 100644
+index 1d7a2ec..a3b2991 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -443,7 +443,7 @@ include(CMakeLists_Dependencies.cmake)
@@ -106,14 +106,14 @@ index 3c5b241..780c590 100644
 2.52.0
 
 
-From a56b34c28775fef07379b1c291acf78414834eae Mon Sep 17 00:00:00 2001
+From 4a29a326f54e58b568fe8032363883561ee88cb5 Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Fri, 8 Jan 2021 22:00:46 +1000
 Subject: Fix for app font
 
 
 diff --git a/scribus/scribus.cpp b/scribus/scribus.cpp
-index 4980b68..41e66a6 100644
+index c0654ee..a179928 100644
 --- a/scribus/scribus.cpp
 +++ b/scribus/scribus.cpp
 @@ -6490,12 +6490,14 @@ void ScribusMainWindow::slotPrefsOrg()
@@ -151,7 +151,7 @@ index e5bea11..5b6b106 100644
 2.52.0
 
 
-From 01cab00a3ee8e3ceea46e17b6f3123fca3554398 Mon Sep 17 00:00:00 2001
+From b3ca289909a10aa42d5b30517d46c7562eb01a30 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Mon, 22 Nov 2021 20:40:09 +0100
 Subject: Prefer the shared libpython3
@@ -173,7 +173,7 @@ index 8e609b1..1dcef14 100644
 2.52.0
 
 
-From 9d6e3dddf3c5060b77c045ce402ab905a9027f7e Mon Sep 17 00:00:00 2001
+From 290e2a96fe1d954632ea05401467d5d2a0b01415 Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Fri, 25 Feb 2022 20:42:38 +0100
 Subject: fix uint32_t type for x86
@@ -262,14 +262,14 @@ index a73ca7a..260d837 100644
 2.52.0
 
 
-From 3b6a4f53014f43dad0d8e31433dabc6f47cf681a Mon Sep 17 00:00:00 2001
+From 1f9939976e9236dd15055120089dccabb17561e7 Mon Sep 17 00:00:00 2001
 From: Begasus <begasus@gmail.com>
 Date: Wed, 7 Feb 2024 14:39:53 +0100
 Subject: Silence deprecated warnings
 
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9b5051d..de87d3e 100644
+index a3b2991..495f4c9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -417,6 +417,9 @@ if(WIN32)
@@ -286,7 +286,7 @@ index 9b5051d..de87d3e 100644
 2.52.0
 
 
-From ab9ac68a60bbb026d456c828f70c40af949bb19a Mon Sep 17 00:00:00 2001
+From bd01853f3a67f26652fc81a30f2051ce7df82b7f Mon Sep 17 00:00:00 2001
 From: Jerome Duval <jerome.duval@gmail.com>
 Date: Wed, 29 May 2024 18:48:34 +0200
 Subject: Haiku: don't set platform plugin
