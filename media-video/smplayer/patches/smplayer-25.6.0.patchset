@@ -1,4 +1,4 @@
-From 3747ce02ab2135c9952d7bca72049c350b92e46d Mon Sep 17 00:00:00 2001
+From 1c072aa81f866d980c965d84703649f29d1498d2 Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Fri, 5 Jun 2015 17:43:34 +0300
 Subject: Disable QtSingleApplication on Haiku
@@ -34,17 +34,17 @@ index d0fb15d..fe60eb8 100644
  
  
 -- 
-2.30.2
+2.52.0
 
 
-From f2514f4e89bc488589cfa2188f13e923cdd17c02 Mon Sep 17 00:00:00 2001
+From aa3741dbbb5d4ac1dc060137067fdd644abd385e Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Sun, 31 Oct 2021 17:21:10 +0300
 Subject: Identify Haiku instead of Other OS
 
 
 diff --git a/src/smplayer.cpp b/src/smplayer.cpp
-index 9cf774d..02079b1 100644
+index 6269a56..012698a 100644
 --- a/src/smplayer.cpp
 +++ b/src/smplayer.cpp
 @@ -618,12 +618,16 @@ void SMPlayer::showInfo() {
@@ -65,17 +65,17 @@ index 9cf774d..02079b1 100644
             ;
  
 -- 
-2.30.2
+2.52.0
 
 
-From 1d9aa9fb24d1fe96cbf9ae8e4d9a138d2f16e9a7 Mon Sep 17 00:00:00 2001
+From 45596716ae85b9cd248a1502f4bfb547c0c7f48e Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Fri, 7 Jul 2017 18:58:29 +0300
 Subject: Disable UPDATE_CHECKER and GLOBALSHORTCUTS
 
 
 diff --git a/src/smplayer.pro b/src/smplayer.pro
-index 273a0ef..23c0c93 100644
+index 8389f49..3720700 100644
 --- a/src/smplayer.pro
 +++ b/src/smplayer.pro
 @@ -25,13 +25,13 @@ DEFINES += MINIGUI
@@ -95,10 +95,10 @@ index 273a0ef..23c0c93 100644
  DEFINES += INITIAL_BLACKBORDERS
  DEFINES += CHROMECAST_SUPPORT
 -- 
-2.30.2
+2.52.0
 
 
-From 6ede56a20d29e3f95b31b82b9fed8f92fade915d Mon Sep 17 00:00:00 2001
+From 26e9a635f7b583253a4b5024703c5de80a219999 Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Fri, 7 Jul 2017 19:00:30 +0300
 Subject: Disable webserver
@@ -118,10 +118,10 @@ index 571e611..a9f4f53 100644
  src/smplayer:
  	./get_svn_revision.sh
 -- 
-2.30.2
+2.52.0
 
 
-From 1bfd4e365af4093ead46c933a09b500e5ebdb461 Mon Sep 17 00:00:00 2001
+From 4ca190eeab81467bca7b1b19de4518e7cb5b624d Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Sun, 9 Jul 2017 16:06:00 +0300
 Subject: Fix PATHS on Haiku
@@ -153,20 +153,20 @@ index a9f4f53..31eca9b 100644
  ICONS_DIR=$(PREFIX)/share/icons/hicolor/
  APPLNK_DIR=$(PREFIX)/share/applications/
 -- 
-2.30.2
+2.52.0
 
 
-From 6ff1fa2b6ad55ffb734bb2ab1fc96db0006406ee Mon Sep 17 00:00:00 2001
+From 915de9cad3704329762cacb5af24ff5034b9b99b Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Sun, 9 Jul 2017 16:06:44 +0300
 Subject: Use default style on Haiku
 
 
 diff --git a/src/preferences.cpp b/src/preferences.cpp
-index 1982776..9d9eeac 100644
+index 40b7452..dab8189 100644
 --- a/src/preferences.cpp
 +++ b/src/preferences.cpp
-@@ -407,12 +407,14 @@ void Preferences::reset() {
+@@ -413,12 +413,14 @@ void Preferences::reset() {
  
  	resize_method = Never;
  
@@ -182,20 +182,20 @@ index 1982776..9d9eeac 100644
  
  	center_window = false;
 -- 
-2.30.2
+2.52.0
 
 
-From a31715d36af696d345befda9004197d5533ae251 Mon Sep 17 00:00:00 2001
+From 445bf66e38cd56050ace618d2ecbed56b51fb568 Mon Sep 17 00:00:00 2001
 From: Gerasim Troeglazov <3dEyes@gmail.com>
 Date: Sun, 31 Oct 2021 17:28:21 +0300
 Subject: Fix winId on Haiku
 
 
 diff --git a/src/core.cpp b/src/core.cpp
-index 71bb60c..5457f5e 100644
+index 03d549f..74402b9 100644
 --- a/src/core.cpp
 +++ b/src/core.cpp
-@@ -1842,6 +1842,8 @@ void Core::startMplayer( QString file, double seek ) {
+@@ -1855,6 +1855,8 @@ void Core::startMplayer( QString file, double seek ) {
  		#ifdef Q_OS_OS2
  		#define WINIDFROMHWND(hwnd) ( ( hwnd ) - 0x80000000UL )
  		proc->setOption("wid", QString::number( WINIDFROMHWND( (int) mplayerwindow->videoLayer()->winId() ) ));
@@ -205,20 +205,20 @@ index 71bb60c..5457f5e 100644
  		#ifndef Q_OS_MACX
  		proc->setOption("wid", QString::number( (qint64) mplayerwindow->videoLayer()->winId() ) );
 -- 
-2.30.2
+2.52.0
 
 
-From ea1b6d1c1dede5e7d74c49664e5e8a3b2ecf124a Mon Sep 17 00:00:00 2001
+From 9a59db068d9b994024fe15c844c5a6af1b15d9f4 Mon Sep 17 00:00:00 2001
 From: Sergei Reznikov <diver@gelios.net>
 Date: Wed, 19 Sep 2018 15:36:35 +0300
 Subject: Use default iconset on Haiku
 
 
 diff --git a/src/preferences.cpp b/src/preferences.cpp
-index 9d9eeac..3c13972 100644
+index dab8189..987863c 100644
 --- a/src/preferences.cpp
 +++ b/src/preferences.cpp
-@@ -489,6 +489,9 @@ void Preferences::reset() {
+@@ -495,6 +495,9 @@ void Preferences::reset() {
  	gui = "DefaultGUI";
  	iconset = "H2O";
  
@@ -229,5 +229,5 @@ index 9d9eeac..3c13972 100644
  #if USE_MINIMUMSIZE
  	gui_minimum_width = 0; // 0 == disabled
 -- 
-2.30.2
+2.52.0
 
