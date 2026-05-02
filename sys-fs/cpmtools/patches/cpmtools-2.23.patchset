@@ -1,0 +1,28 @@
+From 168310dae29aadff9ecfa09452ea5aaf638d4b12 Mon Sep 17 00:00:00 2001
+From: PulkoMandy <pulkomandy@pulkomandy.tk>
+Date: Sat, 2 May 2026 12:11:32 +0200
+Subject: Add disdef for hdcpm
+
+
+diff --git a/diskdefs b/diskdefs
+index aedb733..91628ac 100644
+--- a/diskdefs
++++ b/diskdefs
+@@ -1958,3 +1958,14 @@ offset 128
+ boottrk 0
+ os 3
+ end
++
++diskdef hdcpm
++  seclen 512
++  tracks 65
++  sectrk 256
++  blocksize 8192
++  maxdir 1024
++  skew 0
++  boottrk 1
++  os 3
++end
+-- 
+2.52.0
+
