@@ -14,17 +14,18 @@ CHECKSUM_SHA256="7839b19ac15ba554e1a1fc1dbe898f62cf2fd4db3dcdc126515facc6b929746
 REVISION="1"
 PATCHES="$portName-$portVersion.patchset"
 
-ARCHITECTURES="all"
+ARCHITECTURES="all !x86_gcc2"
+SECONDARY_ARCHITECTURES="x86"
 
 PROVIDES="
 	cpmtools$secondaryArchSuffix = $portVersion
-	cmd:cpmchattr
-	cmd:cpmchmod
-	cmd:cpmcp
-	cmd:cpmls
-	cmd:cpmrm
-	cmd:fsck.cpm
-	cmd:mkfs.cpm
+	cmd:cpmchattr$secondaryArchSuffix
+	cmd:cpmchmod$secondaryArchSuffix
+	cmd:cpmcp$secondaryArchSuffix
+	cmd:cpmls$secondaryArchSuffix
+	cmd:cpmrm$secondaryArchSuffix
+	cmd:fsck.cpm$secondaryArchSuffix
+	cmd:mkfs.cpm$secondaryArchSuffix
 	"
 REQUIRES="
 	haiku$secondaryArchSuffix
