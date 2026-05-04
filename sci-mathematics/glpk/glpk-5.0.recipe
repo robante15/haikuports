@@ -1,0 +1,68 @@
+SUMMARY="GNU Linear Programming Kit"
+DESCRIPTION="The GLPK (GNU Linear Programming Kit) package is intended for solving large-scale \
+linear programming (LP), mixed integer programming (MIP), and other related problems. It is a \
+set of routines written in ANSI C and organized in the form of a callable library.
+
+GLPK supports the GNU MathProg modeling language, which is a subset of the AMPL language.
+
+The GLPK package includes the following main components:
+
+- primal and dual simplex methods
+- primal-dual interior-point method
+- branch-and-cut method
+- translator for GNU MathProg
+- application program interface (API)
+- stand-alone LP/MIP solver"
+HOMEPAGE="https://www.gnu.org/software/glpk/"
+COPYRIGHT="2000-2020 Andrew Makhorin, Department for Applied Informatics, Moscow Aviation Institute, Moscow, Russia."
+LICENSE="GNU GPL v3"
+SOURCE_URI="http://ftp.gnu.org/gnu/glpk/glpk-$portVersion.tar.gz"
+SOURCE_DIR="$portName-$portVersion"
+CHECKSUM_SHA256="4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15"
+REVISION="1"
+
+ARCHITECTURES="all !x86_gcc2"
+SECONDARY_ARCHITECTURES="x86"
+
+PROVIDES="
+	glpk$secondaryArchSuffix = $portVersion
+	cmd:glpsol$secondaryArchSuffix
+	lib:libglpk$secondaryArchSuffix = 40.3.1 compat >= 40
+	"
+REQUIRES="
+	haiku$secondaryArchSuffix
+	"
+
+PROVIDES_devel="
+	glpk${secondaryArchSuffix}_devel = $portVersion
+	devel:libglpk$secondaryArchSuffix = $portVersion
+	"
+REQUIRES_devel="
+	haiku${secondaryArchSuffix}_devel
+	glpk$secondaryArchSuffix == $portVersion base
+	"
+
+BUILD_REQUIRES="
+	haiku${secondaryArchSuffix}_devel
+	"
+BUILD_PREREQUIRES="
+	cmd:awk
+	cmd:make
+	cmd:gcc$secondaryArchSuffix
+	"
+
+BUILD()
+{
+	runConfigure ./configure --disable-static
+	make $jobArgs
+}
+
+INSTALL()
+{
+	make install
+
+	prepareInstalledDevelLibs \
+		libglpk
+	packageEntries devel \
+		$developDir
+}
