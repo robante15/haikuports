@@ -1,0 +1,67 @@
+SUMMARY="Draw signalling charts, block diagrams and graphs from text input"
+DESCRIPTION="Msc-generator is a program that parses textual chart descriptions and produces \
+graphical output in a variety of file formats, or as an object, which can be embedded in \
+documents, such as Word or PowerPoint. It currently supports three kinds of charts:
+
+- Message Sequence Charts (MSCs, this is where the name of the tool comes from);
+- generic graphs in the DOT language of graphviz; and
+- experimental Block Diagrams.
+
+Msc-generator aims to provide a simple text language that is clear to create, edit and \
+understand, and which can be transformed into images. It is a potential alternative to \
+mouse-based editing tools, such as Microsoft Visio."
+HOMEPAGE="https://msc-generator.gitlab.io/msc-generator/"
+COPYRIGHT="2016-2026 Michael C McTernan, Gábor Németh, Zoltán Turányi"
+LICENSE="GNU AGPL v3"
+SOURCE_URI="https://gitlab.com/msc-generator/msc-generator/-/archive/v$portVersion/msc-generator-v$portVersion.tar.gz?ref_type=tags"
+SOURCE_DIR="msc-generator-v$portVersion"
+CHECKSUM_SHA256="fc15a7880a74d8e94d2602e9bd9597ea68918eafb9a079c898db09d37d0d97b7"
+PATCHES="$portName-$portVersion.patchset"
+REVISION="1"
+
+ARCHITECTURES="all !x86_gcc2"
+SECONDARY_ARCHITECTURES="x86"
+
+PROVIDES="
+	msc_generator$secondaryArchSuffix = $portVersion
+	cmd:msc_gen$secondaryArchSuffix
+	"
+REQUIRES="
+	haiku$secondaryArchSuffix
+	lib:libcairo$secondaryArchSuffix
+	lib:libcdt$secondaryArchSuffix
+	lib:libcgraph$secondaryArchSuffix
+	lib:libglpk$secondaryArchSuffix
+	lib:libgvc$secondaryArchSuffix
+	lib:libpng16$secondaryArchSuffix
+	lib:libtinyxml2$secondaryArchSuffix
+	"
+
+BUILD_REQUIRES="
+	haiku${secondaryArchSuffix}_devel
+	devel:libcairo$secondaryArchSuffix
+	devel:libglpk$secondaryArchSuffix
+	devel:libgvc$secondaryArchSuffix
+	devel:libtinyxml2$secondaryArchSuffix
+	"
+BUILD_PREREQUIRES="
+	cmd:aclocal
+	cmd:autoreconf
+	cmd:bison
+	cmd:help2man
+	cmd:gcc$secondaryArchSuffix
+	cmd:make
+	cmd:pkg_config$secondaryArchSuffix
+	"
+
+BUILD()
+{
+	./autogen
+	runConfigure ./configure --disable-gui --disable-font-checks --disable-doc
+	make $jobArgs
+}
+
+INSTALL()
+{
+	make install
+}
