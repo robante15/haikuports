@@ -1,0 +1,43 @@
+SUMMARY="Monospaced fonts for programming"
+DESCRIPTION="The Proggy fonts are all fixed-width and designed for programming. They were \
+optimized while writing C or C++. For this reason, characters like the * are vertically centered \
+as * usually means dereference or multiply, but never 'to the power of' like in Fortran.
+
+The {}s are centered horizontally (in case you align braces vertically), the zero looks different \
+from the capital oh, and there is never any confusion between ells, ones, and eyes.
+
+Additionally, the arithmetic operators (+ - * < >) are all axis-aligned... unlike the last ones \
+you just saw."
+HOMEPAGE="https://github.com/bluescan/proggyfonts"
+COPYRIGHT="2004-2023 Tristan Grimmer"
+LICENSE="MIT"
+SOURCE_URI="https://github.com/bluescan/proggyfonts/archive/refs/tags/v$portVersion.tar.gz"
+CHECKSUM_SHA256="250c7683a254aedbbcab10ad3f5210bfe6110045f9d889024bce9c717046825a"
+SOURCE_DIR="proggyfonts-$portVersion"
+REVISION="1"
+
+ARCHITECTURES="any"
+
+PROVIDES="
+	proggy_fonts = $portVersion
+	"
+REQUIRES="
+	"
+
+BUILD_REQUIRES="
+	haiku${secondaryArchSuffix}_devel
+	"
+BUILD_PREREQUIRES="
+	"
+
+BUILD()
+{
+	true
+}
+
+INSTALL()
+{
+	mkdir -p $fontsDir/ttfonts $fontsDir/otfonts
+	find . -name "*.ttf" -exec cp {} $fontsDir/ttfonts \;
+	find . -name "*.otf" -exec cp {} $fontsDir/otfonts \;
+}
