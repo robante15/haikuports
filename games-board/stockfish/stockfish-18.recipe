@@ -11,12 +11,16 @@ COPYRIGHT="2004-2008 Tord Romstad (Glaurung author)
 LICENSE="GNU GPL v3"
 REVISION="1"
 SOURCE_URI="https://github.com/official-stockfish/Stockfish/archive/sf_$portVersion.tar.gz"
-CHECKSUM_SHA256="802261cc601b67bed00c0ef7d21e2125959630f0852a06db9fc9bd74f440b199"
+CHECKSUM_SHA256="22a195567e3493e7c9ca8bf8fa2339f4ffc876384849ac8a417ff4b919607e7b"
 SOURCE_FILENAME="stockfish-$portVersion.tar.gz"
 SOURCE_DIR="Stockfish-sf_$portVersion"
+SOURCE_URI_2="https://tests.stockfishchess.org/api/nn/nn-c288c895ea92.nnue#noarchive"
+CHECKSUM_SHA256_2="c288c895ea924429ea9092e3f36b2b3c1f00f2a3a4c759ff7e57e79e3b43e4a7"
+SOURCE_URI_3="https://tests.stockfishchess.org/api/nn/nn-37f18f62d772.nnue#noarchive"
+CHECKSUM_SHA256_3="37f18f62d772f3107e1d6aaca3898c130c3c86f2ab63e6555fbbca20635a899d"
 
 ARCHITECTURES="all !x86_gcc2 ?arm ?ppc"
-SECONDARY_ARCHITECTURES="!x86_gcc2 x86"
+SECONDARY_ARCHITECTURES="x86"
 
 if [ "$targetArchitecture" != x86_gcc2 ]; then
 	commandSuffix=$secondaryArchSuffix
@@ -51,13 +55,15 @@ BUILD_PREREQUIRES="
 
 BUILD()
 {
-	make -C src build ARCH=$commandArch
+	ln -srf $sourceDir2/*.nnue src/
+	ln -srf $sourceDir3/*.nnue src/
+	make -C src profile-build ARCH=$commandArch COMP=gcc $jobArgs
 }
 
 INSTALL()
 {
 	install -d $docDir
-	install -t $docDir AUTHORS Readme.md
+	install -t $docDir AUTHORS README.md
 
 	make -C src install BINDIR=$commandBinDir
 }
@@ -66,5 +72,5 @@ TEST()
 {
 	test `src/stockfish bench 2>&1 1>/dev/null \
 		| sed -n -e "s/^Nodes searched *: *//p"` \
-		-eq 5023629
+		-eq 2050811
 }
