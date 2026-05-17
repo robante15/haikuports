@@ -1,0 +1,48 @@
+SUMMARY="Widget to display page-based documents for Qt6/PyQt6"
+DESCRIPTION="qpageview provides a page based document viewer widget for Qt6/PyQt6.
+It has a flexible architecture potentionally supporting many formats. Currently, it supports PDF \
+and SVG documents and several image formats."
+HOMEPAGE="https://qpageview.org/"
+COPYRIGHT="2009-2022 Wilbert Berendsen"
+LICENSE="GNU GPL v3"
+REVISION="1"
+SOURCE_URI="https://files.pythonhosted.org/packages/py3/q/qpageview/qpageview-$portVersion-py3-none-any.whl#noarchive"
+CHECKSUM_SHA256="16ca67e4a636c4544fb6b639a4f1092b5c29706651fcea253c2386535e576723"
+PYTHON3_VERSION="3.10"
+
+ARCHITECTURES="any"
+
+PROVIDES="
+	qpageview = $portVersion
+	"
+REQUIRES="
+	haiku
+	"
+PROVIDES_python310="
+	qpageview_python310 = $portVersion
+	"
+REQUIRES_python310="
+	$REQUIRES
+	pyqt6_python310
+	cmd:python$PYTHON3_VERSION
+	"
+
+BUILD_REQUIRES="
+	haiku_devel
+	installer_python310
+	"
+BUILD_PREREQUIRES="
+	cmd:python$PYTHON3_VERSION
+	"
+
+INSTALL()
+{
+	pythonVersion=$PYTHON3_VERSION
+	python=python$pythonVersion
+	installLocation=lib/python$pythonVersion/vendor-packages/
+
+	$python -m installer -p $prefix qpageview-$portVersion-py3-none-any.whl
+
+	packageEntries python310 \
+		$libDir/python$pythonVersion
+}
